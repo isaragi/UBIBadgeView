@@ -68,6 +68,12 @@ open class UBIBadgeView: UIView {
         }
     }
     
+    @IBInspectable public var stringValue: String? = nil {
+        didSet {
+            self.updateText()
+        }
+    }
+    
     @IBInspectable public var frameBackgroundColor: UIColor = .orange {
         didSet {
             self.frameView.layer.backgroundColor = frameBackgroundColor.cgColor
@@ -123,10 +129,14 @@ open class UBIBadgeView: UIView {
     }
     
     private func updateText() {
-        if self.value >= 1000 {
-            self.label.text = "999+"
+        if let stringValue = self.stringValue {
+            self.label.text = stringValue
         } else {
-            self.label.text = String(self.value)
+            if self.value >= 1000 {
+                self.label.text = "999+"
+            } else {
+                self.label.text = String(self.value)
+            }
         }
         self.label.sizeToFit()
         self.updateHiddenSubviews()
